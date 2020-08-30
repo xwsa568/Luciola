@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Luciola</string>
+
+    <string-array name="programming_languages">
+        <item>C</item>
+        <item>JAVA</item>
+        <item>C++</item>
+        <item>GO</item>
+        <item>PYTHON</item>
+    </string-array>
+
+    <string-array name="descriptions">
+        <item>asdf</item>
+        <item>asdf</item>
+        <item>asdf</item>
+        <item>asdf</item>
+        <item>asdf</item>
+    </string-array>
 </resources>

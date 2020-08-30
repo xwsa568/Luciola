@@ -1,18 +1,27 @@
 package com.KUluciola.Luciola;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.Settings;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity {
 
     Boolean isRotate = false;
     FloatingActionButton fabMain, fabSub1, fabSub2;
+
+    String s1[], s2[];
+
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,5 +56,24 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(wifiDirect, 0);
             }
         });
+
+        s1 = getResources().getStringArray(R.array.programming_languages);
+        s2 = getResources().getStringArray(R.array.descriptions);
+
+        recyclerView = findViewById(R.id.recyclerView);
+
+        mAdapter mAdapter = new mAdapter(this, s1, s2);
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        getSaveFolder();
+    }
+
+    private File getSaveFolder() {
+        File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Luciola");
+        if(!dir.exists()){
+            dir.mkdirs();
+        }
+        return dir;
     }
 }

@@ -16,12 +16,20 @@
             android:name=".Activity_Player"
             android:theme="@style/AppThemeFullscreen" />
 
+        <activity android:name=".PopupActivity" android:theme="@android:style/Theme.Dialog" />
+
+
+        <activity
+            android:name=".LoadingActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
+
         <activity android:name=".Activity_Videos">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 

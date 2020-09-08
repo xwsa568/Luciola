@@ -1,12 +1,15 @@
 package com.KUluciola.Luciola;
 
 import android.content.ContentUris;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Checkable;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -20,7 +23,7 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
 public class Activity_Player extends AppCompatActivity {
-
+    TextView txtResult;
     long videoId;
     private PlayerView playerView;
     private SimpleExoPlayer player;
@@ -47,6 +50,9 @@ public class Activity_Player extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
+        txtResult = (TextView)findViewById(R.id.txtResult);
+
+
 
         initializeViews();
         videoId = getIntent().getExtras().getLong("videoId");
@@ -66,6 +72,25 @@ public class Activity_Player extends AppCompatActivity {
             adapter.addItem(LIST_ITEM[i]);
         }
     }
+    public void mOnPopupClick(View v){
+        //데이터 담아서 팝업(액티비티) 호출
+        Intent intent = new Intent(this, PopupActivity.class);
+        intent.putExtra("data", "신고하시겠습니까?");
+        startActivityForResult(intent, 1);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==1){
+            if(resultCode==RESULT_OK){
+                //데이터 받기
+                String result = data.getStringExtra("result");
+                txtResult.setText(result);
+            }
+        }
+    }
+
+
+
 
     private void initializeViews() {
         playerView = findViewById(R.id.playerView);

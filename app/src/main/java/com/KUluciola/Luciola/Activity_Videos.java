@@ -45,6 +45,9 @@ public class Activity_Videos extends AppCompatActivity {
         initializeViews();
         checkPermissions();
 
+        Intent intent = new Intent(this, LoadingActivity.class);
+        startActivity(intent);
+
         fabMain = findViewById(R.id.fabMain);
         fabSub1 = findViewById(R.id.fabSub1);
         fabSub2 = findViewById(R.id.fabSub2);
@@ -69,22 +72,15 @@ public class Activity_Videos extends AppCompatActivity {
         fabSub1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent wifiDirect = new Intent(Settings.ACTION_WIFI_SETTINGS);
-                startActivityForResult(wifiDirect, 0);
-            }
-        });
-        fabSub2.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP_MR1)
-            @Override
-            public void onClick(View view) {
-                startActivityForResult(Intent.createChooser(new Intent().setAction(Intent.ACTION_GET_CONTENT).setType("video/mp4"),"Select a video"), 1);
+                Intent bluetooth = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
+                startActivityForResult(bluetooth, 0);
             }
         });
     }
 
     private void initializeViews() {
         RecyclerView recyclerView = findViewById(R.id.recyclerView_videos);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 1)); //3 = column count
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 1)); //1 = column count
         adapterVideoList = new AdapterVideoList(this, videosList);
         recyclerView.setAdapter(adapterVideoList);
         this.mediaController = new MediaController(this);
@@ -145,43 +141,5 @@ public class Activity_Videos extends AppCompatActivity {
 
             }
         }.start();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        String[] projection = {MediaStore.Video.Media._ID, MediaStore.Video.Media.DISPLAY_NAME};
-
-        if(requestCode == 1 && resultCode == RESULT_OK) {
-            if (data != null) {
-                Uri uri = data.getData();
-
-
-             /*   if (uri != null) {
-                    Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
-                    try {
-                        if (cursor != null && cursor.moveToFirst()) {
-                            String title = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DISPLAY_NAME));
-                            ContentValues values = new ContentValues();
-                            values.put(VideoDataBase.CreateDB.TITLE, title);
-                            values.put(VideoDataBase.CreateDB.URI, uri.toString());
-
-                            //long id = cursor.getLong(cursor.getColumnIndexOrThrow(VideoDataBase.CreateDB._ID));
-
-                            videosList.add(new ModelVideo(newRowId, uri, title));
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    adapterVideoList.notifyItemInserted(videosList.size() - 1);
-                                }
-                            });
-                        }
-                    } finally {
-                        cursor.close();
-                    }
-                }*/
-            }
-        }
     }
 }
